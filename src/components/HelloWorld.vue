@@ -35,7 +35,7 @@
         <a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a>
       </li>
     </ul>
-    <i class="el-icon-edit"></i>
+    <!-- <i class="el-icon-edit"></i> -->
   </div>
 </template>
 
