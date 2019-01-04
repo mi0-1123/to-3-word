@@ -1,11 +1,14 @@
 <template>
   <div>
     <el-row :gutter="3">
+      <el-col :span="1">
+        <el-button type="primary" icon="el-icon-location" circle></el-button>
+      </el-col>
       <el-col :span="6">
         <el-input placeholder="Please Input" v-model="cityName" clearable>{{ cityName }}</el-input>
       </el-col>
       <el-col :span="1">
-        <el-button @click="findCity(cityName)">get geocode</el-button>
+        <el-button type="primary" @click="findCity(cityName)">get geocode</el-button>
       </el-col>
     </el-row>
   </div>
