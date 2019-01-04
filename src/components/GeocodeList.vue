@@ -1,13 +1,18 @@
 <template>
   <div>
     <el-row :gutter="3">
+      <el-col :span="1">
+        <el-button type="primary" icon="el-icon-location" @click="getGeolocate()" circle></el-button>
+      </el-col>
       <el-col :span="6">
         <el-input placeholder="Please Input" v-model="cityName" clearable>{{ cityName }}</el-input>
       </el-col>
       <el-col :span="1">
-        <el-button @click="findCity(cityName)">get geocode</el-button>
+        <el-button type="primary" @click="findCity(cityName)">get geocode</el-button>
       </el-col>
     </el-row>
+    <div>{{ this.cityName }}</div>
+    <div>{{ this.geocode }}</div>
   </div>
 </template>
 
@@ -48,9 +53,24 @@ export default {
         });
     },
     getGeocode(obj) {
-      this.lat = obj.results[0].geometry.location.lat;
-      this.lng = obj.results[0].geometry.location.lng;
-      console.log("lat" + this.lat, "lng" + this.lng);
+      this.geocode.lat = obj.results[0].geometry.location.lat;
+      this.geocode.lng = obj.results[0].geometry.location.lng;
+      console.log("lat" + this.geocode.lat, "lng" + this.geocode.lng);
+    },
+    getGeolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            this.geocode.lat = pos.coords.latitude;
+            this.geocode.lng = pos.coords.longitude;
+          },
+          (error) => {
+            console.error('error', error.code);
+          }
+        );
+      } else {
+        alert('Sorry, this device can not use geolocation!');
+      }
     }
   }
 };
