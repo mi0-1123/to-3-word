@@ -1,19 +1,26 @@
 <template>
   <div>
-    <el-row :gutter="10">
+    <el-row :gutter="20">
       <el-col :span="1">
         <el-button type="primary" icon="el-icon-location" @click="getGeolocate()" circle></el-button>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-input placeholder="Please Input" v-model="cityName" clearable>{{ cityName }}</el-input>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <el-button type="primary" @click="findCity(cityName)">get geocode</el-button>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <el-button type="primary" @click="toWhat3Words()">to 3 words</el-button>
       </el-col>
     </el-row>
+    <div v-for="(word, index) in wordList" :key="index">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-card>{{ word.words }}</el-card>
+        </el-col>
+      </el-row>
+    </div>
     <div>{{ this.cityName }}</div>
     <div>{{ this.geocode }}</div>
     <div>{{ this.words }}</div>
@@ -30,7 +37,8 @@ export default {
         lat: "",
         lng: ""
       },
-      words: ""
+      words: "",
+      wordList: []
     };
   },
   methods: {
@@ -63,6 +71,7 @@ export default {
       console.log("lat" + this.geocode.lat, "lng" + this.geocode.lng);
     },
     getGeolocate() {
+      console.log("click!");
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           pos => {
@@ -73,6 +82,7 @@ export default {
             console.error("error", error.code);
           }
         );
+        this.cityName = "";
       } else {
         alert("Sorry, this device can not use geolocation!");
       }
@@ -90,15 +100,27 @@ export default {
         .then(res => {
           console.log(res.words);
           this.words = res.words;
+          this.addList(res);
         })
         .catch(error => {
           console.error(error);
         });
+    },
+    addList(obj) {
+      this.wordList.push({
+        words: obj.words,
+        geocode: obj.geometry,
+        name: this.cityName,
+        map: obj.map
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.el-row {
+  margin-bottom: 20px;
+}
 </style>
 
