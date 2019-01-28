@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import GeocodeList from '@/components/GeocodeList'
-import Header from '@/components/Header'
+import Navbar from '@/components/Navbar'
 
 Vue.use(Router)
 
@@ -13,9 +13,9 @@ export default new Router({
       component: GeocodeList
     },
     {
-      path: '/header',
-      name: 'Header',
-      component: Header
+      path: '/navbar',
+      name: 'Navbar',
+      component: Navbar
     }
   ]
 })
